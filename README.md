@@ -80,6 +80,7 @@ Zależności runtime znajdują się w `requirements.txt`:
 ```txt
 openai>=1.0.0
 python-dotenv>=1.0.0
+nicegui>=3.12.1
 ```
 
 ---
@@ -92,6 +93,30 @@ Sklonuj albo utwórz katalog projektu:
 mkdir psych-bot
 cd psych-bot
 ```
+
+### Automatycznie na Windows PowerShell
+
+W katalogu projektu uruchom:
+
+```powershell
+.\setup_venv.ps1
+```
+
+Skrypt utworzy katalog `venv`, zaktualizuje `pip` i zainstaluje zależności z `requirements.txt`.
+
+Jeśli chcesz odtworzyć środowisko od zera, użyj:
+
+```powershell
+.\setup_venv.ps1 -Force
+```
+
+Po zakończeniu aktywuj środowisko:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+### Ręcznie
 
 Utwórz środowisko wirtualne:
 
@@ -146,6 +171,19 @@ W wersji jednoplikowej:
 
 ```bash
 python psych_bot.py
+```
+
+GUI NiceGUI:
+
+```powershell
+python gui.py
+```
+
+Jeśli port `8080` jest zajęty, aplikacja automatycznie wybierze kolejny wolny port. Możesz też wymusić port:
+
+```powershell
+$env:PSYCHBOT_GUI_PORT = "8099"
+python gui.py
 ```
 
 W docelowej wersji pakietowej:
@@ -420,6 +458,7 @@ psych-bot/
 │   ├── test_prompts.py
 │   └── test_scoring.py
 ├── requirements.txt
+├── setup_venv.ps1
 ├── pyproject.toml
 ├── backlog.md
 ├── agents.md
@@ -433,6 +472,10 @@ psych-bot/
 ### `requirements.txt`
 
 Minimalne zależności runtime.
+
+### `setup_venv.ps1`
+
+Skrypt PowerShell tworzący lokalny katalog `venv` i instalujący zależności z `requirements.txt`.
 
 ### `pyproject.toml`
 
@@ -498,4 +541,3 @@ Na tym etapie projekt ma status roboczy. Licencja powinna zostać doprecyzowana 
 Wersja: `0.1.0`
 
 Status: prototyp edukacyjny / alpha.
-

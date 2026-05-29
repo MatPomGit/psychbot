@@ -27,6 +27,7 @@ classifiers = [
 dependencies = [
     "openai>=1.0.0",
     "python-dotenv>=1.0.0",
+    "nicegui>=3.12.1",
 ]
 
 [project.optional-dependencies]
