@@ -1,0 +1,25 @@
+{
+  "id": "icd11_6b20_ocd_01",
+  "title": "Natrętne myśli i rytuały",
+  "icd11_code": "6B20",
+  "icd11_name": "Obsessive-compulsive disorder",
+  "hidden_diagnosis": "Zaburzenie obsesyjno-kompulsyjne według logiki ICD-11",
+  "category": "zaburzenia obsesyjno-kompulsyjne i pokrewne",
+  "difficulty": "średni",
+  "age_group": "adult",
+  "patient_profile": "...",
+  "presenting_problem": "...",
+  "clinical_facts": "...",
+  "differential": "...",
+  "safety_notes": "...",
+  "required_topics": [
+    "obsesje",
+    "kompulsje",
+    "czas zajmowany przez objawy",
+    "wgląd"
+  ],
+  "red_flags": [
+    "znaczna utrata czasu",
+    "pogorszenie funkcjonowania"
+  ]
+}
