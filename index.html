@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PsychBot - ICD-11, Czat, API</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			margin: 0;
+			font-family: 'Roboto', Arial, sans-serif;
+			background: #f4f6fb;
+			color: #222;
+            body { background: #f8f9fa; }
+			        .main-flex { display: flex; flex-direction: row; gap: 1.5rem; min-height: 80vh; }
+			        .icd-panel { background: #fff; border-radius: 8px; border: 1px solid #dee2e6; padding: 1rem; min-width: 220px; max-width: 300px; flex: 1; }
+			        .chat-panel { background: #fff; border-radius: 8px; border: 1px solid #dee2e6; padding: 1rem; flex: 2; display: flex; flex-direction: column; min-width: 320px; }
+			        .notes-panel { background: #fff; border-radius: 8px; border: 1px solid #dee2e6; padding: 1rem; min-width: 220px; max-width: 300px; flex: 1; }
+			        .chat-box { height: 400px; overflow-y: auto; background: #f8f9fa; border-radius: 8px; padding: 1rem; border: 1px solid #e5e7eb; margin-bottom: 1rem; }
+			        .chat-message.user { text-align: right; }
+			        .chat-message.bot { text-align: left; }
+			        .question-number { font-weight: bold; color: #2563eb; margin-right: 0.5em; }
+			        .input-group { margin-bottom: 0; }
+			        .notes-area { width: 100%; min-height: 350px; border-radius: 8px; border: 1px solid #dee2e6; padding: 0.7rem; font-size: 1rem; resize: vertical; }
+			        @media (max-width: 900px) {
+			            .main-flex { flex-direction: column; gap: 1rem; }
+			            .icd-panel, .chat-panel, .notes-panel { min-width: 0; max-width: 100%; }
+			        }
+		}
+		.container {
+			display: flex;
+			flex-direction: row;
+			height: 100vh;
+			gap: 1.5rem;
+			padding: 1.5rem;
+        }
+        .icd-panel {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            min-width: 220px;
+            max-width: 300px;
+            flex: 1;
+        }
+        .chat-panel {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            min-width: 320px;
+        }
+        .notes-panel {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            min-width: 220px;
+            max-width: 300px;
+            flex: 1;
+        }
+        .chat-box {            height: 400px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1rem;
+        }
+        .chat-message.user { text-align: right; }
+        .chat-message.bot { text-align: left; }
+        .question-number { font-weight: bold; color: #2563eb; margin-right  : 0.5em; }
+        .input-group { margin-bottom: 0; }
+        .notes-area { width: 100%;
+            min-height: 350px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 0.7rem;
+            font-size: 1rem;
+            resize: vertical; }
+        @media (max-width: 900px) {
+            .main-flex { flex-direction: column; gap: 1rem; }
+            .icd-panel, .chat-panel, .notes-panel { min-width: 0; max-width: 100%; }
+        }
+    </style>
+
+</head>
+<body>
+
+
+			<!-- Górny pasek -->
+			<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-3">
+			  <div class="container-fluid">
+			    <span class="navbar-brand fw-bold">PsychBot</span>
+			    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#optionsModal">
+			      Opcje
+			    </button>
+			  </div>
+			</nav>
+			<div class="container-fluid">
+			  <div class="main-flex">
+			    <!-- Lewa kolumna: ICD-10/11 -->
+			    <div class="icd-panel">
+			      <h5 class="mb-3">Kody ICD-10/11</h5>
+			      <select id="icdSelect" class="form-select mb-3"></select>
+			      <div id="icdDetails"></div>
+			    </div>
+			    <!-- Środek: czat -->
+			    <div class="chat-panel">
+			      <h5 class="mb-3">Symulowana rozmowa z pacjentem</h5>
+			      <div class="chat-box" id="chatBox"></div>
+			      <div class="input-group mt-auto">
+			        <input type="text" id="userInput" class="form-control" placeholder="Twoje pytanie do pacjenta...">
+			        <button class="btn btn-primary" id="sendBtn">Wyślij</button>
+			      </div>
+			    </div>
+			    <!-- Prawa kolumna: notatki -->
+			    <div class="notes-panel">
+			      <h5 class="mb-3">Notatki</h5>
+			      <textarea id="notesArea" class="notes-area" placeholder="Twoje notatki..." spellcheck="true"></textarea>
+			    </div>
+			  </div>
+			</div>
+			<!-- Modal Opcje -->
+			<div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="optionsModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="optionsModalLabel">Opcje</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="mb-3">
+			          <label for="apiKeyInput" class="form-label">OpenAI API Key</label>
+			          <input type="password" id="apiKeyInput" class="form-control" placeholder="OpenAI API Key">
+			        </div>
+			        <button class="btn btn-secondary" id="saveApiKeyBtn">Zapisz klucz API</button>
+			        <span id="apiInfo" class="ms-2"></span>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+			<script>
+			// ICD-10/11 dane przykładowe (w produkcji pobieraj z backendu lub pliku)
+			const icdData = [
+			    { code: '6B20', name_pl: 'Zaburzenie obsesyjno-kompulsyjne', name_en: 'Obsessive-compulsive disorder', system: 'ICD-11' },
+			    { code: 'F32', name_pl: 'Epizod depresyjny', name_en: 'Depressive episode', system: 'ICD-10' },
+			    { code: '6A60', name_pl: 'Zaburzenie afektywne dwubiegunowe II', name_en: 'Bipolar II disorder', system: 'ICD-11' },
+			    { code: 'F41.0', name_pl: 'Zaburzenie lękowe z napadami paniki', name_en: 'Panic disorder', system: 'ICD-10' },
+			    // ...dodaj więcej według potrzeb
+			];
+
+			const icdSelect = document.getElementById('icdSelect');
+			const icdDetails = document.getElementById('icdDetails');
+
+			function renderICDOptions() {
+			    icdSelect.innerHTML = '';
+			    icdData.forEach(entry => {
+			        const opt = document.createElement('option');
+			        opt.value = entry.code;
+			        opt.textContent = `${entry.code} (${entry.system}) — ${entry.name_pl}`;
+			        icdSelect.appendChild(opt);
+			    });
+			    showICDDetails(icdData[0].code);
+			}
+
+			function showICDDetails(code) {
+			    const entry = icdData.find(e => e.code === code);
+			    if (entry) {
+			        icdDetails.innerHTML = `<b>Kod:</b> ${entry.code} <b>(${entry.system})</b><br><b>Nazwa angielska:</b> ${entry.name_en}<br><b>Nazwa polska:</b> ${entry.name_pl}`;
+			    } else {
+			        icdDetails.textContent = 'Nie znaleziono wpisu dla podanego kodu.';
+			    }
+			}
+			icdSelect.addEventListener('change', e => showICDDetails(e.target.value));
+			renderICDOptions();
+
+			// Czat z pacjentem (numeracja pytań)
+			const chatBox = document.getElementById('chatBox');
+			const userInput = document.getElementById('userInput');
+			const sendBtn = document.getElementById('sendBtn');
+			let questionCount = 0;
+
+			function addMessage(sender, text) {
+			    const msgDiv = document.createElement('div');
+			    msgDiv.className = 'chat-message ' + sender;
+			    if (sender === 'user') {
+			        questionCount++;
+			        msgDiv.innerHTML = `<span class="question-number">${questionCount}.</span> <span class="badge bg-primary">Ty</span> <span>${text}</span>`;
+			    } else {
+			        msgDiv.innerHTML = `<span class="badge bg-secondary">Pacjent</span> <span>${text}</span>`;
+			    }
+			    chatBox.appendChild(msgDiv);
+			    chatBox.scrollTop = chatBox.scrollHeight;
+			}
+
+			function handleSend() {
+			    const text = userInput.value.trim();
+			    if (!text) return;
+			    addMessage('user', text);
+			    userInput.value = '';
+			    // Tryb offline: odpowiedź lokalna
+			    let apiKey = localStorage.getItem('openai_api_key') || '';
+			    if (!apiKey) {
+			        setTimeout(() => addMessage('bot', '(tryb offline) ' + text.split('').reverse().join('')), 400);
+			    } else {
+			        // Tu można dodać fetch do backendu
+			        setTimeout(() => addMessage('bot', '(API placeholder) ' + text.split('').reverse().join('')), 400);
+			    }
+			}
+			sendBtn.addEventListener('click', handleSend);
+			userInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleSend(); });
+
+			// Modal Opcje - API Key
+			const apiKeyInput = document.getElementById('apiKeyInput');
+			const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+			const apiInfo = document.getElementById('apiInfo');
+
+			apiKeyInput.value = localStorage.getItem('openai_api_key') || '';
+			saveApiKeyBtn.addEventListener('click', () => {
+			    localStorage.setItem('openai_api_key', apiKeyInput.value.trim());
+			    apiInfo.textContent = 'Klucz zapisany lokalnie (localStorage).';
+			});
+
+			// Notatki - zapisywanie do localStorage
+			const notesArea = document.getElementById('notesArea');
+			notesArea.value = localStorage.getItem('psychbot_notes') || '';
+			notesArea.addEventListener('input', () => {
+			    localStorage.setItem('psychbot_notes', notesArea.value);
+			});
+			</script>
+			</body>
+			</html>

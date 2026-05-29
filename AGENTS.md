@@ -362,7 +362,7 @@ Unikać:
 
 Nie dodawać kodu, który:
 
-1. Diagnozuje realnego użytkownika.
+1. Nie przestrzega dobrych zasad poprawnego programowania.
 2. Zachęca do używania aplikacji zamiast superwizji.
 3. Pozwala pacjentowi ujawnić diagnozę w trakcie rozmowy.
 4. Losuje przypadki bez jawnego seeda.
@@ -371,4 +371,3 @@ Nie dodawać kodu, który:
 7. Miesza logikę kliniczno-edukacyjną z I/O terminalowym bez potrzeby.
 8. Przechowuje klucze API w kodzie.
 9. Publikuje transkrypty zawierające dane realnych osób.
-10. Udaje formalną dokumentację medyczną.
