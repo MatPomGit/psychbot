@@ -16,59 +16,58 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # ============================================================
 
 APP_CONTEXT = """
-Aplikacja działa w Polsce.
-Użytkownikami są psychologowie, psychoterapeuci w szkoleniu oraz studenci psychologii.
-Symulacje dotyczą wyłącznie dorosłych pacjentów.
-W przyszłości aplikacja może zostać rozszerzona o dzieci i młodzież, ale obecnie nie generuj przypadków osób poniżej 18 r.ż.
+    Aplikacja działa w Polsce.
+    Użytkownikami są psychologowie, psychoterapeuci w szkoleniu oraz studenci psychologii.
+    Symulacje dotyczą wyłącznie dorosłych pacjentów.
+    W przyszłości aplikacja może zostać rozszerzona o dzieci i młodzież, ale obecnie nie generuj przypadków osób poniżej 18 r.ż.
 
-Klasyfikacja edukacyjna: ICD-11.
-Uwaga: aplikacja nie zastępuje diagnozy klinicznej, superwizji, konsultacji psychiatrycznej,
-lokalnych procedur kryzysowych ani aktualnych regulacji prawnych.
-"""
-
+    Klasyfikacja edukacyjna: ICD-11.
+    Uwaga: aplikacja nie zastępuje diagnozy klinicznej, superwizji, konsultacji psychiatrycznej,
+    lokalnych procedur kryzysowych ani aktualnych regulacji prawnych.
+    """
 
 AVAILABLE_QUESTION_LIMITS = [12, 24, 48]
 
 DIFFICULTY_MODES = {
-    "student": {
-        "label": "student",
-        "description": "Pacjent ujawnia trochę więcej i odpowiada nieco bardziej edukacyjnie.",
-        "prompt_rules": """
-TRYB STUDENT:
-- Użytkownik może być studentem psychologii.
-- Pacjent nadal nie ujawnia diagnozy ani kodów ICD.
-- Pacjent odpowiada trochę pełniej niż w realnym, trudnym wywiadzie.
-- Jeżeli pytanie użytkownika jest trafne, pacjent może spontanicznie dodać 1–2 powiązane szczegóły.
-- Pacjent nie powinien być przesadnie enigmatyczny.
-- Nie dawaj jednak gotowych etykiet diagnostycznych.
-- Nie mów: „to brzmi jak depresja/OCD/panika/ChAD”.
-"""
+        "student": {
+            "label": "student",
+            "description": "Pacjent ujawnia trochę więcej i odpowiada nieco bardziej edukacyjnie.",
+            "prompt_rules": """
+    TRYB STUDENT:
+    - Użytkownik może być studentem psychologii.
+    - Pacjent nadal nie ujawnia diagnozy ani kodów ICD.
+    - Pacjent odpowiada trochę pełniej niż w realnym, trudnym wywiadzie.
+    - Jeżeli pytanie użytkownika jest trafne, pacjent może spontanicznie dodać 1–2 powiązane szczegóły.
+    - Pacjent nie powinien być przesadnie enigmatyczny.
+    - Nie dawaj jednak gotowych etykiet diagnostycznych.
+    - Nie mów: „to brzmi jak depresja/OCD/panika/ChAD”.
+    """
     },
     "standard": {
         "label": "standard",
         "description": "Pacjent ujawnia informacje dopiero po dobrych pytaniach.",
         "prompt_rules": """
-TRYB STANDARD:
-- Pacjent odpowiada realistycznie i umiarkowanie szczegółowo.
-- Kluczowe informacje ujawnia dopiero wtedy, gdy użytkownik zada adekwatne pytania.
-- Przy pytaniach ogólnych pacjent mówi głównie o problemie zgłaszanym.
-- Przy pytaniach precyzyjnych pacjent ujawnia fakty kliniczne zgodne z kartą.
-- Nie podpowiada użytkownikowi, o co powinien zapytać.
-"""
+    TRYB STANDARD:
+    - Pacjent odpowiada realistycznie i umiarkowanie szczegółowo.
+    - Kluczowe informacje ujawnia dopiero wtedy, gdy użytkownik zada adekwatne pytania.
+    - Przy pytaniach ogólnych pacjent mówi głównie o problemie zgłaszanym.
+    - Przy pytaniach precyzyjnych pacjent ujawnia fakty kliniczne zgodne z kartą.
+    - Nie podpowiada użytkownikowi, o co powinien zapytać.
+    """
     },
     "egzamin": {
         "label": "egzamin",
         "description": "Pacjent nie pomaga, odpowiada realistycznie i oszczędnie.",
         "prompt_rules": """
-TRYB EGZAMIN:
-- Pacjent odpowiada oszczędnie, realistycznie i bez pomagania użytkownikowi.
-- Nie rozwija odpowiedzi ponad to, o co został zapytany.
-- Przy pytaniach zamkniętych odpowiada krótko: tak/nie/nie wiem + ewentualnie jedno zdanie.
-- Przy pytaniach niejasnych odpowiada niejasno.
-- Nie ujawnia kluczowych informacji, jeśli użytkownik o nie nie zapyta.
-- Może minimalizować, bagatelizować lub wstydzić się objawów, zgodnie z profilem pacjenta.
-- Nie daje edukacyjnych wskazówek w trakcie wywiadu.
-"""
+    TRYB EGZAMIN:
+    - Pacjent odpowiada oszczędnie, realistycznie i bez pomagania użytkownikowi.
+    - Nie rozwija odpowiedzi ponad to, o co został zapytany.
+    - Przy pytaniach zamkniętych odpowiada krótko: tak/nie/nie wiem + ewentualnie jedno zdanie.
+    - Przy pytaniach niejasnych odpowiada niejasno.
+    - Nie ujawnia kluczowych informacji, jeśli użytkownik o nie nie zapyta.
+    - Może minimalizować, bagatelizować lub wstydzić się objawów, zgodnie z profilem pacjenta.
+    - Nie daje edukacyjnych wskazówek w trakcie wywiadu.
+    """
     }
 }
 
@@ -76,7 +75,7 @@ TRYB EGZAMIN:
 # MODEL DANYCH PRZYPADKU
 # ============================================================
 
-@dataclass
+
 @dataclass
 class Case:
     """Model danych przypadku edukacyjnego do symulacji wywiadu klinicznego.
@@ -144,7 +143,6 @@ CASES = [
         title="Obniżony nastrój i wycofanie",
         icd11_code="6A70",
         icd10_code="F32",
-        icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 zależy od nasilenia i obecności objawów psychotycznych, np. F32.0–F32.3.",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 zależy od nasilenia i obecności objawów psychotycznych, np. F32.0–F32.3.",
         hidden_diagnosis="Epizod depresyjny według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia nastroju",
@@ -228,7 +226,6 @@ CASES = [
         icd11_code="6B01",
         icd10_code="F41.0",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny ICD-10 dla zaburzenia panicznego.",
-        icd_mapping_note="Przybliżony odpowiednik edukacyjny ICD-10 dla zaburzenia panicznego.",
         hidden_diagnosis="Zaburzenie paniczne według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia lękowe",
         difficulty="łatwy/średni",
@@ -300,7 +297,6 @@ CASES = [
         title="Natrętne myśli i rytuały",
         icd11_code="6B20",
         icd10_code="F42",
-        icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 może zależeć od dominacji myśli natrętnych, czynności natrętnych lub obrazu mieszanego.",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 może zależeć od dominacji myśli natrętnych, czynności natrętnych lub obrazu mieszanego.",
         hidden_diagnosis="Zaburzenie obsesyjno-kompulsyjne według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia obsesyjno-kompulsyjne i pokrewne",
@@ -374,9 +370,7 @@ CASES = [
         id="icd11_6a60_bipolar_type_ii_01",
         title="Okresy dużej energii i późniejsze załamania",
         icd11_code="6A61",
-        icd11_name="Bipolar type II disorder",
         icd10_code="F31",
-        icd10_name="Zaburzenie afektywne dwubiegunowe",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny. W ICD-10 szczegółowe kodowanie F31 zależy od aktualnego epizodu i jego nasilenia.",
         hidden_diagnosis="Zaburzenie afektywne dwubiegunowe typu II — przypadek treningowy według logiki ICD-11",
         category="zaburzenia nastroju",
