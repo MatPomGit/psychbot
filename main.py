@@ -76,32 +76,48 @@ TRYB EGZAMIN:
 # ============================================================
 
 @dataclass
+@dataclass
 class Case:
+    """Model danych przypadku edukacyjnego do symulacji wywiadu klinicznego.
+
+    Atrybuty:
+        id: Unikalny identyfikator przypadku.
+        title: Tytuł przypadku.
+        icd11_code: Kod ICD-11.
+        icd11_name: Nazwa jednostki ICD-11.
+        icd10_code: Kod ICD-10 (przybliżony odpowiednik).
+        icd10_name: Nazwa jednostki ICD-10.
+        icd_mapping_note: Notatka o mapowaniu ICD-11 ↔ ICD-10.
+        hidden_diagnosis: Ukryta diagnoza treningowa.
+        category: Kategoria dydaktyczna.
+        difficulty: Poziom trudności.
+        adult_only: Czy przypadek dotyczy wyłącznie dorosłych.
+        suitable_for_students: Czy przypadek nadaje się dla studentów.
+        patient_profile: Profil pacjenta (opis).
+        presenting_problem: Problem zgłaszany przez pacjenta.
+        clinical_facts: Fakty kliniczne do stopniowego ujawniania.
+        differential: Diagnostyka różnicowa.
+        safety_notes: Notatki dotyczące bezpieczeństwa.
+        required_topics: Lista wymaganych obszarów wywiadu.
+        red_flags: Lista czerwonych flag.
+    """
     id: str
     title: str
-
-    # ICD-11 oraz starszy odpowiednik ICD-10
     icd11_code: str
     icd11_name: str
     icd10_code: str
     icd10_name: str
     icd_mapping_note: str
     hidden_diagnosis: str
-
-    # Metadane dydaktyczne
     category: str
     difficulty: str
     adult_only: bool = True
     suitable_for_students: bool = True
-
-    # Dane symulacyjne
     patient_profile: str = ""
     presenting_problem: str = ""
     clinical_facts: str = ""
     differential: str = ""
     safety_notes: str = ""
-
-    # Checklisty do oceny
     required_topics: List[str] = field(default_factory=list)
     red_flags: List[str] = field(default_factory=list)
 
@@ -433,6 +449,11 @@ CASES = [
 # ============================================================
 
 def choose_question_limit() -> int:
+    """Pozwala użytkownikowi wybrać limit pytań psychologa.
+
+    Returns:
+        int: Wybrany limit pytań.
+    """
     print("\nWybierz limit pytań psychologa:")
     for idx, limit in enumerate(AVAILABLE_QUESTION_LIMITS, start=1):
         print(f"{idx}. {limit} pytań")
@@ -452,6 +473,11 @@ def choose_question_limit() -> int:
         print("Wybierz 12, 24 albo 48 — lub wpisz numer opcji 1, 2 albo 3.")
 
 def choose_difficulty_mode() -> str:
+    """Pozwala użytkownikowi wybrać tryb trudności rozmowy.
+
+    Returns:
+        str: Wybrany tryb trudności ('student', 'standard', 'egzamin').
+    """
     print("\nWybierz tryb trudności rozmowy:")
     print("1. student  — pacjent ujawnia trochę więcej")
     print("2. standard — pacjent ujawnia informacje dopiero po dobrych pytaniach")
@@ -473,6 +499,11 @@ def choose_difficulty_mode() -> str:
         print("Wybierz 1, 2, 3 albo wpisz: student, standard, egzamin.")
 
 def choose_case() -> Case:
+    """Pozwala użytkownikowi wybrać przypadek lub losuje przypadek.
+
+    Returns:
+        Case: Wybrany przypadek.
+    """
     print("\nWybierz tryb:")
     print("1. Sam wybieram przypadek")
     print("2. Bot losuje przypadek")
@@ -484,11 +515,11 @@ def choose_case() -> Case:
     if choice == "1":
         print("\nDostępne przypadki dorosłych:")
         for idx, case in enumerate(adult_cases, start=1):
-        print(
-            f"{idx}. {case.title} "
-            f"[ICD-11: {case.icd11_code}; ICD-10: {case.icd10_code}; "
-            f"{case.category}; poziom przypadku: {case.difficulty}]"
-        )
+            print(
+                f"{idx}. {case.title} "
+                f"[ICD-11: {case.icd11_code}; ICD-10: {case.icd10_code}; "
+                f"{case.category}; poziom przypadku: {case.difficulty}]"
+            )
 
         while True:
             raw = input("Numer przypadku: ").strip()
