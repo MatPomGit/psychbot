@@ -6,6 +6,12 @@ Projekt jest edukacyjnym symulatorem wywiadu klinicznego. Nie jest narzędziem d
 
 ---
 
+## 0. Zasady językowe
+
+- **Kod źródłowy, nazwy funkcji, klas, zmiennych, plików i typów piszemy po angielsku.**
+- **Komentarze, docstringi, przypisy oraz interfejs użytkownika (komunikaty, opisy, teksty w terminalu) piszemy po polsku.**
+- Wyjątki dopuszczalne tylko dla oficjalnych nazw jednostek chorobowych, kodów ICD, cytatów lub fragmentów promptów wymagających oryginalnego brzmienia.
+
 ## 1. Cel projektu
 
 Budujemy terminalową aplikację edukacyjną dla:
