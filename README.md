@@ -176,14 +176,23 @@ python psych_bot.py
 GUI NiceGUI:
 
 ```powershell
+.\run_gui.ps1
+```
+
+Skrypt uruchamia `gui.py` przez interpreter z `.\venv\Scripts\python.exe`, więc nie zależy od globalnego Pythona ani ustawień interpretera w edytorze.
+
+Możesz też uruchomić GUI ręcznie po aktywacji środowiska:
+
+```powershell
+.\venv\Scripts\Activate.ps1
 python gui.py
 ```
 
-Jeśli port `8080` jest zajęty, aplikacja automatycznie wybierze kolejny wolny port. Możesz też wymusić port:
+Jeśli port `8080` jest zajęty, aplikacja automatycznie wybierze kolejny wolny port. Możesz wymusić port:
 
 ```powershell
 $env:PSYCHBOT_GUI_PORT = "8099"
-python gui.py
+.\run_gui.ps1
 ```
 
 W docelowej wersji pakietowej:
@@ -458,6 +467,7 @@ psych-bot/
 │   ├── test_prompts.py
 │   └── test_scoring.py
 ├── requirements.txt
+├── run_gui.ps1
 ├── setup_venv.ps1
 ├── pyproject.toml
 ├── backlog.md
@@ -472,6 +482,10 @@ psych-bot/
 ### `requirements.txt`
 
 Minimalne zależności runtime.
+
+### `run_gui.ps1`
+
+Skrypt PowerShell uruchamiający GUI przez lokalny interpreter z katalogu `venv`.
 
 ### `setup_venv.ps1`
 
