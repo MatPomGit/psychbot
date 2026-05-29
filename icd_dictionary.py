@@ -189,6 +189,20 @@ ICD_11_DICTIONARY = [
 
 # Słownik kodów ICD-10
 ICD_10_DICTIONARY = [
+
+def get_icd11_entry_by_code(code: str) -> Optional[dict]:
+    """Zwraca słownik z nazwą angielską i polską dla danego kodu ICD-11.
+
+    Args:
+        code: Kod ICD-11 (np. "6A70").
+
+    Returns:
+        Słownik z polami 'code', 'name_en', 'name_pl' lub None jeśli nie znaleziono.
+    """
+    for entry in ICD_11_DICTIONARY:
+        if entry["code"] == code:
+            return entry
+    return None
     {
         "code": "F32",
         "name_en": "Depressive episode",

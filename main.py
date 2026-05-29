@@ -2,6 +2,7 @@ import os
 import random
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
+from icd_dictionary import get_icd11_entry_by_code
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -84,9 +85,7 @@ class Case:
         id: Unikalny identyfikator przypadku.
         title: Tytuł przypadku.
         icd11_code: Kod ICD-11.
-        icd11_name: Nazwa jednostki ICD-11.
         icd10_code: Kod ICD-10 (przybliżony odpowiednik).
-        icd10_name: Nazwa jednostki ICD-10.
         icd_mapping_note: Notatka o mapowaniu ICD-11 ↔ ICD-10.
         hidden_diagnosis: Ukryta diagnoza treningowa.
         category: Kategoria dydaktyczna.
@@ -104,9 +103,7 @@ class Case:
     id: str
     title: str
     icd11_code: str
-    icd11_name: str
     icd10_code: str
-    icd10_name: str
     icd_mapping_note: str
     hidden_diagnosis: str
     category: str
@@ -121,6 +118,18 @@ class Case:
     required_topics: List[str] = field(default_factory=list)
     red_flags: List[str] = field(default_factory=list)
 
+    @property
+    def icd11_name(self) -> str:
+        """Zwraca angielską nazwę jednostki ICD-11 na podstawie kodu."""
+        entry = get_icd11_entry_by_code(self.icd11_code)
+        return entry["name_en"] if entry else "(nieznany kod)"
+
+    @property
+    def icd11_name_pl(self) -> str:
+        """Zwraca polską nazwę jednostki ICD-11 na podstawie kodu."""
+        entry = get_icd11_entry_by_code(self.icd11_code)
+        return entry["name_pl"] if entry else "(nieznany kod)"
+
 
 # ============================================================
 # BAZA PRZYPADKÓW
@@ -134,9 +143,8 @@ CASES = [
         id="icd11_6a70_depressive_episode_01",
         title="Obniżony nastrój i wycofanie",
         icd11_code="6A70",
-        icd11_name="Single episode depressive disorder / Depressive episode",
         icd10_code="F32",
-        icd10_name="Epizod depresyjny",
+        icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 zależy od nasilenia i obecności objawów psychotycznych, np. F32.0–F32.3.",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 zależy od nasilenia i obecności objawów psychotycznych, np. F32.0–F32.3.",
         hidden_diagnosis="Epizod depresyjny według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia nastroju",
@@ -218,9 +226,8 @@ CASES = [
         id="icd11_6b01_panic_disorder_01",
         title="Napady silnego lęku i objawy z ciała",
         icd11_code="6B01",
-        icd11_name="Panic disorder",
         icd10_code="F41.0",
-        icd10_name="Zaburzenie paniczne / lęk napadowy",
+        icd_mapping_note="Przybliżony odpowiednik edukacyjny ICD-10 dla zaburzenia panicznego.",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny ICD-10 dla zaburzenia panicznego.",
         hidden_diagnosis="Zaburzenie paniczne według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia lękowe",
@@ -292,9 +299,8 @@ CASES = [
         id="icd11_6b20_ocd_01",
         title="Natrętne myśli i rytuały",
         icd11_code="6B20",
-        icd11_name="Obsessive-compulsive disorder",
         icd10_code="F42",
-        icd10_name="Zaburzenie obsesyjno-kompulsyjne",
+        icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 może zależeć od dominacji myśli natrętnych, czynności natrętnych lub obrazu mieszanego.",
         icd_mapping_note="Przybliżony odpowiednik edukacyjny. Szczegółowy kod ICD-10 może zależeć od dominacji myśli natrętnych, czynności natrętnych lub obrazu mieszanego.",
         hidden_diagnosis="Zaburzenie obsesyjno-kompulsyjne według logiki ICD-11 — przypadek treningowy",
         category="zaburzenia obsesyjno-kompulsyjne i pokrewne",
