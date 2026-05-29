@@ -15,11 +15,13 @@ Projekt jest edukacyjnym symulatorem wywiadu klinicznego. Nie jest narzędziem d
 ## 1. Cel projektu
 
 Budujemy terminalową aplikację edukacyjną dla:
+
 - psychologów;
 - psychoterapeutów w szkoleniu;
 - studentów psychologii.
 
 Aplikacja symuluje fikcyjnych dorosłych pacjentów i pozwala ćwiczyć:
+
 - prowadzenie wywiadu;
 - rozumowanie diagnostyczne;
 - diagnostykę różnicową;
@@ -49,6 +51,7 @@ Każda zmiana w projekcie musi zachowywać następujące zasady:
 ### 3.1. Type hints są obowiązkowe
 
 Każda funkcja musi mieć adnotacje typów dla:
+
 - wszystkich parametrów;
 - wartości zwracanej.
 
@@ -69,9 +72,10 @@ def choose_question_limit(available_limits):
 
 ### 3.2. Docstringi są obowiązkowe
 
-Każda funkcja musi mieć docstring.
+Każda funkcja musi mieć docstring w języku polskim.
 
 Docstring powinien krótko opisywać:
+
 - co funkcja robi;
 - jakie przyjmuje dane;
 - co zwraca;
@@ -97,6 +101,7 @@ def build_patient_prompt(case: Case, question_limit: int, difficulty_mode: str) 
 ### 3.3. Unikać funkcji bezpośrednio zależnych od input/output
 
 Tam, gdzie to możliwe, oddzielać:
+
 - logikę biznesową;
 - wejście terminalowe;
 - drukowanie wyniku;
@@ -122,6 +127,7 @@ def print_case(case):
 Funkcje powinny mieć pojedynczą odpowiedzialność.
 
 Jeśli funkcja:
+
 - wybiera przypadek,
 - pyta użytkownika,
 - losuje,
@@ -177,11 +183,13 @@ def choose_random_case(cases: list[Case], seed: int) -> Case:
 Każda funkcja, która losuje, powinna przyjmować `seed: int`.
 
 Dopuszczalne:
+
 - domyślny seed w konfiguracji, np. `DEFAULT_RANDOM_SEED = 42`;
 - użytkownik podaje seed w terminalu;
 - seed zapisywany jest w transkrypcie ćwiczenia.
 
 Niedopuszczalne:
+
 - ukryte losowanie zależne od czasu;
 - brak możliwości odtworzenia tego samego przypadku;
 - mieszanie globalnego stanu `random`.
@@ -189,6 +197,7 @@ Niedopuszczalne:
 ### 4.3. Transkrypt powinien zapisywać seed
 
 Przy eksporcie transkryptu zapisać:
+
 - id przypadku;
 - seed;
 - limit pytań;
@@ -205,12 +214,14 @@ Przy eksporcie transkryptu zapisać:
 Przypadki powinny być opisywane według ICD-11.
 
 Wymagane pola:
+
 - `icd11_code`;
 - `icd11_name`.
 
 ### 5.2. ICD-10 jest starszym odpowiednikiem edukacyjnym
 
 Dla każdego przypadku dodać:
+
 - `icd10_code`;
 - `icd10_name`;
 - `icd_mapping_note`.
@@ -218,6 +229,7 @@ Dla każdego przypadku dodać:
 Mapowanie ICD-11 ↔ ICD-10 nie zawsze jest 1:1.
 
 Dlatego w polu `icd_mapping_note` zaznaczać, czy:
+
 - kod ICD-10 jest tylko przybliżony;
 - szczegółowy kod zależy od epizodu, nasilenia lub specyfikatora;
 - przypadek ma niejednoznaczne mapowanie.
@@ -225,6 +237,7 @@ Dlatego w polu `icd_mapping_note` zaznaczać, czy:
 ### 5.3. Nie wymyślać kodów bez weryfikacji
 
 Przy dodawaniu nowych przypadków:
+
 - sprawdzić kod w oficjalnych lub wiarygodnych źródłach;
 - nie polegać wyłącznie na pamięci modelu;
 - dodać notatkę o mapowaniu.
@@ -261,6 +274,7 @@ Prompt feedbacku musi oceniać:
 - ocenę końcową.
 
 Feedback musi uwzględniać:
+
 - limit pytań;
 - liczbę wykorzystanych pytań;
 - tryb trudności;
@@ -279,6 +293,7 @@ Projekt używa trzech trybów:
 Pacjent ujawnia trochę więcej.
 
 Zasady:
+
 - odpowiedzi nieco pełniejsze;
 - po trafnym pytaniu pacjent może dodać 1–2 powiązane szczegóły;
 - nadal nie ujawnia diagnozy;
@@ -290,6 +305,7 @@ Zasady:
 Pacjent ujawnia informacje dopiero po dobrych pytaniach.
 
 Zasady:
+
 - realistyczna, umiarkowana szczegółowość;
 - pytania ogólne dają ogólne odpowiedzi;
 - pytania precyzyjne ujawniają fakty kliniczne;
@@ -300,6 +316,7 @@ Zasady:
 Pacjent nie pomaga, odpowiada realistycznie i oszczędnie.
 
 Zasady:
+
 - krótkie odpowiedzi;
 - brak spontanicznego rozwijania;
 - niejasne pytania dają niejasne odpowiedzi;
@@ -326,6 +343,7 @@ Przy modyfikacji logiki dodać lub zaktualizować testy dla:
 ## 9. Styl komunikatów terminalowych
 
 Komunikaty powinny być:
+
 - jasne;
 - po polsku;
 - krótkie;
@@ -333,6 +351,7 @@ Komunikaty powinny być:
 - nieoceniające.
 
 Unikać:
+
 - tonu medycznej pewności;
 - sugerowania, że wynik jest diagnozą;
 - alarmistycznego tonu poza sytuacjami związanymi z ryzykiem.
@@ -353,4 +372,3 @@ Nie dodawać kodu, który:
 8. Przechowuje klucze API w kodzie.
 9. Publikuje transkrypty zawierające dane realnych osób.
 10. Udaje formalną dokumentację medyczną.
-
