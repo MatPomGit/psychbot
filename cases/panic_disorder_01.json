@@ -1,0 +1,13 @@
+{
+  "code": "6B01",
+  "icd10_code": "F41.0",
+  "name_en": "Panic disorder",
+  "name_pl": "Zaburzenie paniczne",
+  "icd10_name_en": "Panic disorder (episodic paroxysmal anxiety)",
+  "icd10_name_pl": "Zaburzenie paniczne / lęk napadowy",
+  "icd_mapping_note": "Bezpośrednie mapowanie ICD-11 6B01 → ICD-10 F41.0.",
+  "description_pl": "Pacjent doświadcza nawracających napadów silnego lęku, którym towarzyszą objawy somatyczne (kołatanie serca, duszność, pocenie się). Napady pojawiają się niespodziewanie.",
+  "criteria_pl": "Powtarzające się napady paniki, lęk przed kolejnym napadem, objawy somatyczne, brak powiązania z konkretną sytuacją.",
+  "differential_pl": "Fobia społeczna, zaburzenia lękowe uogólnione, zaburzenia somatyczne, zaburzenia depresyjne.",
+  "guidelines_pl": "Zbadaj okoliczności napadów, objawy somatyczne, lęk antycypacyjny, unikanie sytuacji, wyklucz przyczyny somatyczne i inne zaburzenia lękowe."
+}

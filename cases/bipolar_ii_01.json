@@ -1,0 +1,13 @@
+{
+  "code": "6A61",
+  "icd10_code": "F31",
+  "name_en": "Bipolar type II disorder",
+  "name_pl": "Zaburzenie afektywne dwubiegunowe typu II",
+  "icd10_name_en": "Bipolar affective disorder",
+  "icd10_name_pl": "Zaburzenie afektywne dwubiegunowe",
+  "icd_mapping_note": "ICD-11 6A61 odpowiada ICD-10 F31, ale typ II nie jest wyodrębniony w ICD-10.",
+  "description_pl": "Pacjent zgłasza nawracające epizody depresji oraz przynajmniej jeden epizod hipomanii. Brak pełnych epizodów maniakalnych.",
+  "criteria_pl": "Co najmniej jeden epizod depresyjny i jeden epizod hipomanii, brak epizodów maniakalnych.",
+  "differential_pl": "Zaburzenia depresyjne nawracające, zaburzenia osobowości, zaburzenia schizoafektywne.",
+  "guidelines_pl": "Zbadaj liczbę i charakter epizodów, obecność hipomanii, wyklucz epizody maniakalne, oceniaj funkcjonowanie między epizodami."
+}

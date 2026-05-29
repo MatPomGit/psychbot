@@ -1,0 +1,13 @@
+{
+  "code": "6B23",
+  "icd10_code": "F45.0",
+  "name_en": "Somatization disorder",
+  "name_pl": "Zaburzenie somatyzacyjne",
+  "icd10_name_en": "Somatization disorder",
+  "icd10_name_pl": "Zaburzenie somatyzacyjne",
+  "icd_mapping_note": "Bezpośrednie mapowanie ICD-11 6B23 → ICD-10 F45.0.",
+  "description_pl": "Pacjent zgłasza liczne, zmienne dolegliwości somatyczne, których nie można w pełni wyjaśnić przyczyną medyczną. Objawy utrzymują się przez dłuższy czas i prowadzą do częstych wizyt lekarskich.",
+  "criteria_pl": "Wielorakie, zmienne objawy somatyczne, brak pełnego wyjaśnienia medycznego, przewlekły przebieg, poszukiwanie pomocy medycznej.",
+  "differential_pl": "Zaburzenia lękowe, depresyjne, zaburzenia somatyczne związane z chorobą somatyczną, symulacja.",
+  "guidelines_pl": "Zbadaj liczbę i rodzaj objawów, czas trwania, dotychczasową diagnostykę, wpływ na funkcjonowanie, postawę wobec objawów."
+}

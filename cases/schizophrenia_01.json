@@ -1,0 +1,13 @@
+{
+  "code": "6A20",
+  "icd10_code": "F20",
+  "name_en": "Schizophrenia",
+  "name_pl": "Schizofrenia",
+  "icd10_name_en": "Schizophrenia",
+  "icd10_name_pl": "Schizofrenia",
+  "icd_mapping_note": "Bezpośrednie mapowanie ICD-11 6A20 → ICD-10 F20.",
+  "description_pl": "Pacjent doświadcza objawów psychotycznych: urojeń, omamów, dezorganizacji myślenia i zachowania. Objawy utrzymują się przez co najmniej miesiąc i prowadzą do znacznego upośledzenia funkcjonowania.",
+  "criteria_pl": "Obecność objawów psychotycznych (urojenia, omamy, dezorganizacja), czas trwania powyżej miesiąca, upośledzenie funkcjonowania.",
+  "differential_pl": "Zaburzenia schizoafektywne, zaburzenia afektywne z objawami psychotycznymi, zaburzenia osobowości, zaburzenia organiczne.",
+  "guidelines_pl": "Zbadaj rodzaj i czas trwania objawów psychotycznych, funkcjonowanie przedchorobowe, wyklucz przyczyny organiczne i substancje psychoaktywne."
+}

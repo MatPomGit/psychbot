@@ -1,0 +1,13 @@
+{
+  "code": "6A70",
+  "icd10_code": "F32",
+  "name_en": "Single episode depressive disorder / Depressive episode",
+  "name_pl": "Epizod depresyjny (pojedynczy epizod)",
+  "icd10_name_en": "Depressive episode",
+  "icd10_name_pl": "Epizod depresyjny",
+  "icd_mapping_note": "Bezpośrednie mapowanie ICD-11 6A70 → ICD-10 F32.",
+  "description_pl": "Pacjent zgłasza się z obniżonym nastrojem, utratą zainteresowań i energii. Objawy trwają od kilku tygodni, wpływają na codzienne funkcjonowanie.",
+  "criteria_pl": "Obniżony nastrój, utrata zainteresowań, zmęczenie, zaburzenia snu, trudności z koncentracją, poczucie winy lub małej wartości, myśli samobójcze.",
+  "differential_pl": "Zaburzenia lękowe, zaburzenia adaptacyjne, zaburzenia afektywne dwubiegunowe, zaburzenia somatyczne.",
+  "guidelines_pl": "Zbadaj nastrój, energię, sen, apetyt, myśli samobójcze, funkcjonowanie społeczne i zawodowe. Oceń ryzyko samobójcze. Wyklucz epizod maniakalny w wywiadzie."
+}

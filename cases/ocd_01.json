@@ -1,0 +1,13 @@
+{
+  "code": "6B20",
+  "icd10_code": "F42",
+  "name_en": "Obsessive-compulsive disorder",
+  "name_pl": "Zaburzenie obsesyjno-kompulsyjne",
+  "icd10_name_en": "Obsessive-compulsive disorder",
+  "icd10_name_pl": "Zaburzenie obsesyjno-kompulsyjne",
+  "icd_mapping_note": "Bezpośrednie mapowanie ICD-11 6B20 → ICD-10 F42.",
+  "description_pl": "Pacjent zgłasza natrętne myśli (obsesje) oraz powtarzające się czynności (kompulsje), które mają na celu zmniejszenie lęku. Objawy są uciążliwe i zaburzają codzienne funkcjonowanie.",
+  "criteria_pl": "Obsesje (natrętne myśli), kompulsje (powtarzające się czynności), świadomość ich nadmiarowości, cierpienie lub upośledzenie funkcjonowania.",
+  "differential_pl": "Zaburzenia lękowe, zaburzenia depresyjne, zaburzenia psychotyczne, zaburzenia osobowości.",
+  "guidelines_pl": "Zbadaj rodzaj obsesji i kompulsji, czas trwania, wpływ na funkcjonowanie, próby oporu, wgląd, wyklucz inne zaburzenia psychiczne."
+}
